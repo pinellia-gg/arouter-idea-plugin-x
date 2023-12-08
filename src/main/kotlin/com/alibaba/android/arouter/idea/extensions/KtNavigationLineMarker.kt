@@ -113,7 +113,7 @@ class KtNavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<P
         const val NOTIFY_TITLE = "Road Sign"
         const val NOTIFY_NO_TARGET_TIPS = "No destination found or unsupported type."
 
-        val navigationOnIcon = IconLoader.getIcon("/icon/outline_my_location_black_18dp.png")
+        val navigationOnIcon = IconLoader.getIcon("/icon/outline_my_location_black_18dp.png", KtNavigationLineMarker::class.java)
 
         //获取路径
         fun resolvePath(element:Any):String{

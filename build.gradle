@@ -1,12 +1,14 @@
 plugins {
+//    id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+//    id "org.jetbrains.intellij" version '1.15.0'
     id 'org.jetbrains.kotlin.jvm' version '1.8.0'
     id "org.jetbrains.intellij" version '1.11.0'
 }
 
-version '2.2.1'
+version '2.2.2'
 
 intellij {
-    version = '2022.3.1'
+    version = '2023.1.1'
 //    version = 'LATEST-EAP-SNAPSHOT'
     intellij.updateSinceUntilBuild = true
     intellij.sameSinceUntilBuild = false
@@ -14,12 +16,16 @@ intellij {
 }
 
 patchPluginXml {
-    changeNotes = 'update by github:huage2580'
+    changeNotes = 'update by pinellia'
     sinceBuild = '173.*' //最低版本限制
     untilBuild = null //最高版本限制 好像必须指定
 }
 
 repositories {
+    maven { url "https://maven.aliyun.com/repository/public" }
+    maven { url "https://maven.aliyun.com/repository/google" }
+    maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+    maven { url "https://maven.repository.redhat.com/ga/" }
     mavenCentral()
 }
 
@@ -27,5 +33,5 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17

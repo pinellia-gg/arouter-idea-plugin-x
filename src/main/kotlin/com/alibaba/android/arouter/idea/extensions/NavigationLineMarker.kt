@@ -1,6 +1,5 @@
 package com.alibaba.android.arouter.idea.extensions
 
-import com.intellij.codeHighlighting.Pass
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler
 import com.intellij.codeInsight.daemon.LineMarkerInfo
 import com.intellij.codeInsight.daemon.LineMarkerProvider
@@ -9,12 +8,14 @@ import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
 import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.openapi.util.IconLoader
-import com.intellij.psi.*
+import com.intellij.psi.PsiCallExpression
+import com.intellij.psi.PsiClass
+import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiMethodCallExpression
 import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl
 import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl
 import org.jetbrains.annotations.NotNull
-import org.jetbrains.kotlin.asJava.builder.toLightClassOrigin
 import java.awt.event.MouseEvent
 import java.util.function.Supplier
 
@@ -29,7 +30,7 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
 
     override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
         return if (isNavigationCall(element)) {
-            LineMarkerInfo(element,element.textRange, navigationOnIcon,null,this,GutterIconRenderer.Alignment.LEFT,
+            LineMarkerInfo(element, element.textRange, navigationOnIcon, null, this, GutterIconRenderer.Alignment.LEFT,
                 Supplier { "ARouter Marker" })
         } else {
             null
@@ -41,12 +42,12 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
             val psiExpressionList = (psiElement as PsiMethodCallExpressionImpl).argumentList
             if (psiExpressionList.expressions.size == 1) {
                 // Support `build(path)` only now.
-                    //(psiExpressionList.expressions[0] as PsiReferenceExpressionImpl).resolve().children
-                    //PsiReferenceExpression:testjava
-                    //PsiLiteralExpression:"/test/java"
+                //(psiExpressionList.expressions[0] as PsiReferenceExpressionImpl).resolve().children
+                //PsiReferenceExpression:testjava
+                //PsiLiteralExpression:"/test/java"
                 val targetPath = resolvePath(psiExpressionList.expressions[0])
-                val found = NavigationHelper.findTargetAndNavigate(psiElement,targetPath,e)
-                if (found){
+                val found = NavigationHelper.findTargetAndNavigate(psiElement, targetPath, e)
+                if (found) {
                     return
                 }
             }
@@ -56,16 +57,23 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
     }
 
 
-
     private fun notifyNotFound() {
-        Notifications.Bus.notify(Notification(NOTIFY_SERVICE_NAME, NOTIFY_TITLE, NOTIFY_NO_TARGET_TIPS, NotificationType.WARNING))
+        Notifications.Bus.notify(
+            Notification(
+                NOTIFY_SERVICE_NAME,
+                NOTIFY_TITLE,
+                NOTIFY_NO_TARGET_TIPS,
+                NotificationType.WARNING
+            )
+        )
     }
 
 
     override fun collectSlowLineMarkers(
         elements: @NotNull MutableList<out PsiElement>,
         result: @NotNull MutableCollection<in LineMarkerInfo<*>>
-    ) {}
+    ) {
+    }
 
     /**
      * Judge whether the code used for navigation.
@@ -106,22 +114,24 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
         const val NOTIFY_TITLE = "Road Sign"
         const val NOTIFY_NO_TARGET_TIPS = "No destination found or unsupported type."
 
-        val navigationOnIcon = IconLoader.getIcon("/icon/outline_my_location_black_18dp.png")
+        val navigationOnIcon =
+            IconLoader.getIcon("/icon/outline_my_location_black_18dp.png", NavigationLineMarker::class.java)
 
         //获取路径
-        fun resolvePath(element:Any):String{
-            val path = when(element){
+        fun resolvePath(element: Any): String {
+            val path = when (element) {
                 is PsiLiteralExpressionImpl -> element.text
-                is PsiReferenceExpressionImpl ->{
+                is PsiReferenceExpressionImpl -> {
                     val children = element.resolve()!!.children
-                    var target = children.findLast { it is PsiLiteralExpressionImpl}
-                    if (children.isEmpty()){//应该是KT里面的常量引用
+                    var target = children.findLast { it is PsiLiteralExpressionImpl }
+                    if (children.isEmpty()) {//应该是KT里面的常量引用
                         target = element.resolve()
                         target = target!!.navigationElement.lastChild
                     }
                     target!!.text
                 }
-                else->element.toString()
+
+                else -> element.toString()
             }
             return path.replace("\"", "")
         }

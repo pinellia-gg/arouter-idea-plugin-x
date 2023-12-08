@@ -65,7 +65,7 @@ class KtAnnotationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<P
         const val NOTIFY_TITLE = "Road Sign"
         const val NOTIFY_NO_TARGET_TIPS = "No destination found or unsupported type."
 
-        val navigationOnIcon = IconLoader.getIcon("/icon/outline_my_location_black_18dp.png")
+        val navigationOnIcon = IconLoader.getIcon("/icon/outline_my_location_black_18dp.png", KtAnnotationLineMarker::class.java)
     }
 
 }
