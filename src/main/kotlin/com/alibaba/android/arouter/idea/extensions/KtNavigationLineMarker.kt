@@ -9,6 +9,7 @@ import com.intellij.notification.Notifications
 import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.*
+import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl
 import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl
 import org.jetbrains.annotations.NotNull
@@ -67,6 +68,7 @@ class KtNavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<P
      * Judge whether the code used for navigation.
      */
     private fun isNavigationCall(psiElement: PsiElement): Boolean {
+//        println("psi is: ${psiElement.text},type:${psiElement::class}")
         if (psiElement is KtCallExpression) {
 //            System.out.println("target=>" + psiElement.javaClass.name +" | "+ psiElement.text)
 
@@ -78,6 +80,7 @@ class KtNavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<P
                 }
             }
         }
+
         return false
     }
 

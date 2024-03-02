@@ -2,7 +2,7 @@
 
 fork from huage2580/arouter-idea-plugin-x
 
-修复Android Studio 2023.1.1失效问题
+兼容Android Studio 2023.2.1
 
 
 ------

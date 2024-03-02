@@ -12,6 +12,7 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.PsiJavaCodeReferenceElementImpl
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationImpl
+import com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl
 import org.jetbrains.annotations.NotNull
 import java.awt.event.MouseEvent
 
@@ -29,6 +30,14 @@ class AnnotationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
         }
     }
 
+    /**
+     * 2023-12-11 00:22:42,360 [ 448344]
+     * WARN - #c.i.c.d.LineMarkerInfo -
+     * Performance warning:
+     * LineMarker is supposed to be registered for leaf elements only, but got:
+     * PsiAnnotation (class com.intellij.psi.impl.source.tree.java.PsiAnnotationImpl) instead.
+     * First child: PsiJavaToken:AT (class com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl)
+     */
     private fun isARouterAnnotation(element: PsiElement): Boolean {
 //        System.out.println(element.javaClass.name +" | "+ element.text)
         if (element is PsiAnnotationImpl){

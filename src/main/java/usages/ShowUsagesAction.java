@@ -151,7 +151,7 @@ public class ShowUsagesAction extends AnAction implements PopupAction {
                     CommonBundle.getErrorTitle(), Messages.getErrorIcon());
         } else {
             int offset = editor.getCaretModel().getOffset();
-            boolean chosen = GotoDeclarationAction.chooseAmbiguousTarget(project,editor, offset, processor,
+            boolean chosen = GotoDeclarationAction.chooseAmbiguousTarget(editor, offset, processor,
                     FindBundle.message("find.usages.ambiguous.title", "crap"), null);
             if (!chosen) {
                 ApplicationManager.getApplication().invokeLater(() -> {
@@ -805,6 +805,7 @@ public class ShowUsagesAction extends AnAction implements PopupAction {
         ActionToolbar actionToolbar = ActionManager.getInstance().createActionToolbar(ActionPlaces.USAGE_VIEW_TOOLBAR, toolbar, true);
         actionToolbar.setReservePlaceAutoPopupIcon(false);
         JComponent toolBar = actionToolbar.getComponent();
+        actionToolbar.setTargetComponent(toolBar);
         toolBar.setOpaque(false);
         builder.setSettingButton(toolBar);
 

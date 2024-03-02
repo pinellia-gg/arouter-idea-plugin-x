@@ -11,7 +11,10 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiCallExpression
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiIdentifier
 import com.intellij.psi.PsiMethodCallExpression
+import com.intellij.psi.PsiReferenceExpression
+import com.intellij.psi.impl.source.tree.java.PsiIdentifierImpl
 import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl
 import com.intellij.psi.impl.source.tree.java.PsiMethodCallExpressionImpl
 import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl
@@ -29,6 +32,8 @@ import java.util.function.Supplier
 class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<PsiElement> {
 
     override fun getLineMarkerInfo(element: PsiElement): LineMarkerInfo<*>? {
+//        println("psi is: ${element.text},type:${element::class}")
+
         return if (isNavigationCall(element)) {
             LineMarkerInfo(element, element.textRange, navigationOnIcon, null, this, GutterIconRenderer.Alignment.LEFT,
                 Supplier { "ARouter Marker" })
@@ -38,8 +43,15 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
     }
 
     override fun navigate(e: MouseEvent?, psiElement: PsiElement?) {
-        if (psiElement is PsiMethodCallExpression) {
-            val psiExpressionList = (psiElement as PsiMethodCallExpressionImpl).argumentList
+        var methodCall: PsiElement ?= null
+
+        if (psiElement is PsiIdentifier) {
+            methodCall = psiElement.parent?.parent
+        }
+
+
+        if (psiElement !=null && methodCall is PsiMethodCallExpression) {
+            val psiExpressionList = (methodCall as PsiMethodCallExpressionImpl).argumentList
             if (psiExpressionList.expressions.size == 1) {
                 // Support `build(path)` only now.
                 //(psiExpressionList.expressions[0] as PsiReferenceExpressionImpl).resolve().children
@@ -79,13 +91,12 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
      * Judge whether the code used for navigation.
      */
     private fun isNavigationCall(psiElement: PsiElement): Boolean {
-        if (psiElement is PsiCallExpression) {
-            val method = psiElement.resolveMethod() ?: return false
-            val parent = method.parent
-            if (method.name == "build" && parent is PsiClass) {
-                if (isClassOfARouter(parent)) {
-                    return true
-                }
+
+        if (psiElement is PsiIdentifier && psiElement.text == "build") {
+            val ret = psiElement.parent?.firstChild as? PsiMethodCallExpression
+            val cls = ret?.resolveMethod()?.parent
+            if (cls is PsiClass && isClassOfARouter(cls)) {
+                return true
             }
         }
         return false

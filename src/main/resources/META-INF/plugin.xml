@@ -1,8 +1,8 @@
 <idea-plugin>
     <id>arouter-roadsign-x</id>
     <name>ARouter Helper X</name>
-    <version>2.1.2</version>
-    <vendor email="2838666797@qq.com" url="https://github.com/huage2580">Huage2580</vendor>
+    <version>2.3.0</version>
+    <vendor email="pinellia.gg@outlook.com" url="https://github.com/pinellia-gg">pinellia-gg</vendor>
     <idea-version since-build="173.*"/>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
@@ -15,12 +15,12 @@
     <extensions defaultExtensionNs="com.intellij">
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.alibaba.android.arouter.idea.extensions.NavigationLineMarker"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.alibaba.android.arouter.idea.extensions.AnnotationLineMarker"/>
         <codeInsight.lineMarkerProvider language="kotlin"
                                         implementationClass="com.alibaba.android.arouter.idea.extensions.KtNavigationLineMarker"/>
         <codeInsight.lineMarkerProvider language="kotlin"
                                         implementationClass="com.alibaba.android.arouter.idea.extensions.KtAnnotationLineMarker"/>
-        <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.alibaba.android.arouter.idea.extensions.AnnotationLineMarker"/>
     </extensions>
 
 </idea-plugin>
