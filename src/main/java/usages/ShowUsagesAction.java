@@ -785,7 +785,8 @@ public class ShowUsagesAction extends AnAction implements PopupAction {
         DefaultActionGroup toolbar = new DefaultActionGroup();
         usageView.addFilteringActions(toolbar);
 
-        toolbar.add(UsageGroupingRuleProviderImpl.createGroupByFileStructureAction(usageView));
+//        toolbar.add(UsageGroupingRuleProviderImpl.createGroupByFileStructureAction(usageView));
+        toolbar.addAll(new UsageGroupingRuleProviderImpl().createGroupingActions(usageView));
         toolbar.add(new AnAction("Open Find Usages Toolwindow", "Show all usages in a separate toolwindow", AllIcons.Toolwindows.ToolWindowFind) {
             {
                 AnAction action = ActionManager.getInstance().getAction(IdeActions.ACTION_FIND_USAGES);

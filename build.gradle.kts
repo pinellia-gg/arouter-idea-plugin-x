@@ -27,11 +27,11 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+//    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
     intellijPlatform {
-        androidStudio("2024.1.2.12")
-//        intellijIdeaCommunity("2024.2.1")
+//        androidStudio("2024.1.2.12")
+        intellijIdeaCommunity("2024.2.1")
 
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.jetbrains.kotlin")
@@ -50,7 +50,7 @@ kotlin {
 
 
 group = "com.pinellia"
-version "2.4.0"
+//version "2.4.0"
 //intellij {
 //    version = '2024.2.1'
 //    intellij.updateSinceUntilBuild = true
