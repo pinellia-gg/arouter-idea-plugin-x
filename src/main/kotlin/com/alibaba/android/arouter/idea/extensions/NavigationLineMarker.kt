@@ -126,7 +126,7 @@ class NavigationLineMarker : LineMarkerProvider, GutterIconNavigationHandler<Psi
         const val NOTIFY_NO_TARGET_TIPS = "No destination found or unsupported type."
 
         val navigationOnIcon =
-            IconLoader.getIcon("/icon/outline_my_location_black_18dp.png", NavigationLineMarker::class.java)
+            IconLoader.getIcon("/icon/outline_location_green_18x.png", NavigationLineMarker::class.java)
 
         //获取路径
         fun resolvePath(element: Any): String {

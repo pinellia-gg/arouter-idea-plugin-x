@@ -4,8 +4,10 @@ import com.intellij.ide.util.PsiClassListCellRenderer
 import com.intellij.navigation.NavigationItem
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.psi.*
+import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationImpl
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl
+import com.intellij.psi.impl.source.tree.java.PsiJavaTokenImpl
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.psi.search.searches.AnnotatedMembersSearch
 import com.intellij.ui.awt.RelativePoint

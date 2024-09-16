@@ -74,6 +74,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
 import java.util.function.Predicate;
@@ -818,7 +819,7 @@ public class ShowUsagesAction extends AnAction implements PopupAction {
                 .getPreferredSize().getWidth()
                 + settingsButton.getPreferredSize().getWidth());
         myWidth = -1;
-        for (AnAction action : toolbar.getChildren(null)) {
+        for (AnAction action : toolbar.getChildren((AnActionEvent) null)) {
             action.unregisterCustomShortcutSet(usageView.getComponent());
             action.registerCustomShortcutSet(action.getShortcutSet(), content);
         }

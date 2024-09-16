@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>arouter-roadsign-x</id>
     <name>ARouter Helper X</name>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
     <vendor email="pinellia.gg@outlook.com" url="https://github.com/pinellia-gg">pinellia-gg</vendor>
     <idea-version since-build="173.*"/>
     <depends>com.intellij.modules.platform</depends>
